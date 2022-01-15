@@ -47,7 +47,7 @@ namespace DictionaryBackWorker
                         // todo config
                         busConfig.UsingRabbitMq((context, rabbitCfg) =>
                         {
-                            rabbitCfg.Host("amqp://n750jv.internal", h =>
+                            rabbitCfg.Host("amqp://host.docker.internal", h =>
                             {
                                 h.Username("guest");
                                 h.Password("guest");

@@ -21,6 +21,4 @@ docker-stop-prev:
 docker-run:
   stage: run
   script:
-    - docker run --name $CI_REGISTRY_IMAGE_MY -p 4350:80 -d $CI_REGISTRY_IMAGE_MY:$CI_COMMIT_SHA
-  # after_script:
-  #   - docker image prune -a -f
+    - docker run --name $CI_REGISTRY_IMAGE_MY --add-host=host.docker.internal:host-gateway -d $CI_REGISTRY_IMAGE_MY:$CI_COMMIT_SHA

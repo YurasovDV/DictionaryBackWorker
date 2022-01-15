@@ -12,7 +12,7 @@ FROM mcr.microsoft.com/dotnet/aspnet:5.0
 WORKDIR /app
 COPY --from=build-env /app .
 
-ENV ASPNETCORE_URLS http://*:5000
+ENV ASPNETCORE_URLS http://*:4350
 
 
 ENTRYPOINT ["dotnet", "DictionaryBackWorker.dll"]
