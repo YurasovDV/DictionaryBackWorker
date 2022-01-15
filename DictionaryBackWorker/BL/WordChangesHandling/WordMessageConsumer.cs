@@ -16,7 +16,7 @@ namespace DictionaryBackWorker
 
         public Task Consume(ConsumeContext<WordMessage> context)
         {
-            _logger.LogInformation("Received message: {@Message}", context.Message);
+            _logger.LogInformation("Received message: {Term} {IsDeleted}", context.Message.Term, context.Message.IsDeleted);
 
             return Task.CompletedTask;
         }

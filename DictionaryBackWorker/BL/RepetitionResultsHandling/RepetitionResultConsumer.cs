@@ -33,15 +33,15 @@ namespace DictionaryBackWorker
                 var groupToPrint = results.FirstOrDefault(g => g.Key == statusToPrint);
                 if (groupToPrint != null)
                 {
-                    foreach (var term in groupToPrint)
+                    foreach (var result in groupToPrint)
                     {
                         if (message == null)
                         {
-                            _logger.LogInformation("Successfully trained: {Term}", term);
+                            _logger.LogInformation("Successfully trained: {Term}", result.Term);
                         }
                         else
                         {
-                            _logger.LogWarning(message, term.Term);
+                            _logger.LogWarning(message, result.Term);
                         }
 
                     }
