@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.32002.261
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DictionaryBackWorker", "DictionaryBackWorker.csproj", "{14F14F3B-6321-4936-B72D-19268AA1F70E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DictionaryBackWorker", "DictionaryBackWorker\DictionaryBackWorker.csproj", "{14F14F3B-6321-4936-B72D-19268AA1F70E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DictionaryBack.Contracts", "DictionaryBack.Contracts\DictionaryBack.Contracts.csproj", "{46847EDD-FFFD-49D5-8E4E-276923D0ED55}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{14F14F3B-6321-4936-B72D-19268AA1F70E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{14F14F3B-6321-4936-B72D-19268AA1F70E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{14F14F3B-6321-4936-B72D-19268AA1F70E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{46847EDD-FFFD-49D5-8E4E-276923D0ED55}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{46847EDD-FFFD-49D5-8E4E-276923D0ED55}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{46847EDD-FFFD-49D5-8E4E-276923D0ED55}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{46847EDD-FFFD-49D5-8E4E-276923D0ED55}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

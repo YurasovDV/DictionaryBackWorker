@@ -1,0 +1,26 @@
+variables:
+  CI_REGISTRY_IMAGE_MY: dict-worker
+
+stages:
+  - build
+  - stop-prev
+  - run
+
+docker-build:
+  stage: build
+  before_script:
+    - docker info
+  script:
+    - docker build --pull --cache-from $CI_REGISTRY_IMAGE_MY:latest -t $CI_REGISTRY_IMAGE_MY:$CI_COMMIT_SHA .
+
+docker-stop-prev:
+  stage: stop-prev
+  script:
+    - docker rm -f $CI_REGISTRY_IMAGE_MY &>/dev/null || true 
+
+docker-run:
+  stage: run
+  script:
+    - docker run --name $CI_REGISTRY_IMAGE_MY -p 4350:80 -d $CI_REGISTRY_IMAGE_MY:$CI_COMMIT_SHA
+  # after_script:
+  #   - docker image prune -a -f
