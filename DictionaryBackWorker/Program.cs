@@ -4,6 +4,10 @@ using MassTransit;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Serilog;
+using DictionaryBackWorker.MQ;
+using DictionaryBack.Messages;
+using System;
+using GreenPipes;
 
 namespace DictionaryBackWorker
 {
@@ -39,24 +43,45 @@ namespace DictionaryBackWorker
             Host.CreateDefaultBuilder(args)
                 .ConfigureServices((hostContext, services) =>
                 {
+
+                    services.AddOptions<RabbitSettings>().BindConfiguration(RabbitSettings.SectionName);
+
+                    RabbitSettings opts = hostContext.Configuration
+                    .GetSection(RabbitSettings.SectionName)
+                    .Get<RabbitSettings>();
+
+
                     services.AddMassTransit(busConfig =>
                     {
                         busConfig.AddConsumer<WordMessageConsumer>();
                         busConfig.AddConsumer<RepetitionResultConsumer>();
 
-                        // todo config
                         busConfig.UsingRabbitMq((context, rabbitCfg) =>
                         {
-                            rabbitCfg.Host("amqp://host.docker.internal", h =>
+                            rabbitCfg.Host(opts.Host, h =>
                             {
-                                h.Username("guest");
-                                h.Password("guest");
+                                h.Username(opts.Username);
+                                h.Password(opts.Password);
                             });
 
-                            rabbitCfg.ConfigureEndpoints(context);
-                        });
+                            rabbitCfg.ReceiveEndpoint(queueName: "RepetitionResult", endpointConfigurator =>
+                            {
+                                endpointConfigurator.Bind(exchangeName: "DictionaryBack.Messages:RepetitionEndedMessage");
+                                endpointConfigurator.Bind<RepetitionEndedMessage>();
+                                endpointConfigurator.UseMessageRetry(m => m.Interval(3, TimeSpan.FromSeconds(2)));
+                            });
 
+
+                            rabbitCfg.ReceiveEndpoint(queueName: "WordMessage", endpointConfigurator =>
+                            {
+                                endpointConfigurator.Bind(exchangeName: "DictionaryBack.Messages:WordMessage");
+                                endpointConfigurator.Bind<WordMessage>();
+                                endpointConfigurator.UseMessageRetry(m => m.Interval(3, TimeSpan.FromSeconds(2)));
+                            });
+                        
+                        });
                     });
+
                     services.AddMassTransitHostedService();
 
                     services.AddHostedService<Worker>();
