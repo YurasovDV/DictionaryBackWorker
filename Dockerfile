@@ -4,6 +4,7 @@ WORKDIR /src
 COPY ["DictionaryBackWorker/DictionaryBackWorker.csproj", "./DictionaryBackWorker/DictionaryBackWorker.csproj"]
 COPY ["DictionaryBack.Contracts/DictionaryBack.Contracts.csproj", "./DictionaryBack.Contracts/DictionaryBack.Contracts.csproj"]
 COPY ["DictionaryBackWorker.sln", "DictionaryBackWorker.sln"]
+RUN ping api.nuget.org
 RUN dotnet restore
 COPY . .
 RUN dotnet publish -c Release -o /app
